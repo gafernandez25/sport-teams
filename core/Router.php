@@ -36,8 +36,19 @@ class Router
         $uri = $request->getRequestUri();
 
         // Strip query string (?foo=bar) and decode URI
-        if (false !== $pos = strpos($uri, '?')) {
-            $uri = substr($uri, 0, $pos);
+        $uri = rtrim(rawurldecode($uri), '?');
+        $parameters = [];
+
+        if (str_contains($uri, '?')) {
+            [$uri, $params] = explode('?', $uri);
+
+            $paramsArray = explode('&', $params);
+
+            foreach ($paramsArray as $item) {
+                [$key, $value] = explode('=', $item);
+
+                $parameters[$key] = $value;
+            }
         }
         $uri = rtrim(rawurldecode($uri), '/');
 
@@ -56,6 +67,15 @@ class Router
 
                 $class = $handler[0];
                 $method = $handler[1];
+
+                $payload = $request->getPayload()->all();
+
+                if (!empty($parameters) || !empty($payload)) {
+                    $vars['request'] = new Request(
+                        query: $parameters,
+                        request: $payload
+                    );
+                }
 
                 return call_user_func_array([$this->container->get($class), $method], $vars);
                 break;
