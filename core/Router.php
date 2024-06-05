@@ -71,10 +71,7 @@ class Router
                 $payload = $request->getPayload()->all();
 
                 if (!empty($parameters) || !empty($payload)) {
-                    $vars['request'] = new Request(
-                        query: $parameters,
-                        request: $payload
-                    );
+                    $vars['request'] = $request;
                 }
 
                 return call_user_func_array([$this->container->get($class), $method], $vars);

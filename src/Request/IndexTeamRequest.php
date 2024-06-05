@@ -9,9 +9,9 @@ use App\Model\Sport;
 class IndexTeamRequest
 {
     public function __construct(
-        public ?string $name = null,
+        public string $name,
+        public int $sportId,
         public ?string $city = null,
-        public ?int $sportId = null,
         public ?\DateTimeImmutable $foundationDate = null,
     ) {
     }

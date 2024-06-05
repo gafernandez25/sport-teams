@@ -17,14 +17,14 @@ class IndexTeamRequestValidator extends AbstractValidator
 
     public function validateRequest(Request $request): IndexTeamRequest
     {
-        $this->validate($request, self::RULES);
+        $this->validate($request->getPayload()->all(), self::RULES);
 
         return new IndexTeamRequest(
-            name: $request->request->get('name'),
-            city: $request->request->get('city'),
-            sportId: $request->request->get('sport'),
-            foundationDate: $request->request->get('foundation_date') ?
-                new \DateTimeImmutable($request->request->get('foundation_date')) :
+            name: $request->getPayload()->get('name'),
+            sportId: $request->getPayload()->get('sport'),
+            city: $request->getPayload()->get('city'),
+            foundationDate: $request->getPayload()->has('foundation_date') ?
+                new \DateTimeImmutable($request->getPayload()->get('foundation_date')) :
                 null,
         );
     }

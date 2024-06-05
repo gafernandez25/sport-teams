@@ -28,7 +28,7 @@ class TeamController extends AbstractController
         $team->name = $indexRequest->name;
         $team->city = $indexRequest->city;
         $team->sport_id = $indexRequest->sportId;
-        $team->foundation_date = $indexRequest->foundationDate->format('Y-m-d');
+        $team->foundation_date = $indexRequest->foundationDate?->format('Y-m-d');
 
         $this->teamRepository->save($team);
 
