@@ -7,17 +7,15 @@ namespace Core;
 class View
 {
     private const VIEWS_DIRECTORY = 'views';
-    private string $viewPath;
+    private string $baseViewPath;
 
     public function __construct(protected string $view, protected array $data = [])
     {
-        $viewPath = dirname(__DIR__) . '/' . self::VIEWS_DIRECTORY . '/' . $this->view . '.php';
+        $this->baseViewPath = dirname(__DIR__) . '/' . self::VIEWS_DIRECTORY . '/template.php';
 
-        if (!file_exists($viewPath)) {
+        if (!file_exists(dirname(__DIR__) . '/' . self::VIEWS_DIRECTORY . '/' . $this->view . '.php')) {
             throw new \Exception('View not found');
         }
-
-        $this->viewPath = $viewPath;
     }
 
     public static function make(string $view, array $data = []): static
@@ -29,7 +27,7 @@ class View
     {
         ob_start();
 
-        include $this->viewPath;
+        include $this->baseViewPath;
 
         return (string)ob_get_clean();
     }

@@ -22,7 +22,9 @@ class TeamController extends AbstractController
 
     public function index(): View
     {
-        return View::make('team/index');
+        $teams = $this->teamRepository->getTeams();
+
+        return View::make('team/index', ['teams' => $teams]);
     }
 
     public function store(Request $request): Response
