@@ -29,7 +29,7 @@ class Router
         });
     }
 
-    public function routeRequest(Request $request): ?Response
+    public function routeRequest(Request $request): Response|View|null
     {
         // Fetch method and URI from somewhere
         $httpMethod = $request->getMethod();

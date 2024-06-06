@@ -16,4 +16,4 @@ $kernel = new Kernel();
 
 $response = $kernel->handle($request);
 
-$response->send();
+$response?->send();

@@ -4,31 +4,32 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Team;
 use App\Repository\TeamRepositoryInterface;
-use App\Validator\IndexTeamRequestValidator;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Service\TeamService;
+use App\Validator\StoreTeamRequestValidator;
+use Core\View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TeamController extends AbstractController
 {
     public function __construct(
-        private readonly IndexTeamRequestValidator $indexTeamRequestValidator,
+        private readonly StoreTeamRequestValidator $storeTeamRequestValidator,
         private readonly TeamRepositoryInterface $teamRepository,
+        private readonly TeamService $teamService,
     ) {
     }
 
-    public function store(Request $request): JsonResponse
+    public function index(): View
     {
-        $indexRequest = $this->indexTeamRequestValidator->validateRequest($request);
+        return View::make('team/index');
+    }
 
-        $team = new Team();
+    public function store(Request $request): Response
+    {
+        $storeRequest = $this->storeTeamRequestValidator->validateRequest($request);
 
-        $team->name = $indexRequest->name;
-        $team->city = $indexRequest->city;
-        $team->sport_id = $indexRequest->sportId;
-        $team->foundation_date = $indexRequest->foundationDate?->format('Y-m-d');
+        $team = $this->teamService->createTeamFromStoreRequest($storeRequest);
 
         $this->teamRepository->save($team);
 

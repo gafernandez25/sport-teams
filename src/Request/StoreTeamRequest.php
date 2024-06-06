@@ -6,7 +6,7 @@ namespace App\Request;
 
 use App\Model\Sport;
 
-class IndexTeamRequest
+class StoreTeamRequest
 {
     public function __construct(
         public string $name,

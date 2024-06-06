@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Validator;
 
-use App\Request\IndexTeamRequest;
+use App\Request\StoreTeamRequest;
 use Symfony\Component\HttpFoundation\Request;
 
-class IndexTeamRequestValidator extends AbstractValidator
+class StoreTeamRequestValidator extends AbstractValidator
 {
     private const RULES = [
         'name' => 'required',
@@ -15,11 +15,11 @@ class IndexTeamRequestValidator extends AbstractValidator
         'foundation_date' => 'date',
     ];
 
-    public function validateRequest(Request $request): IndexTeamRequest
+    public function validateRequest(Request $request): StoreTeamRequest
     {
         $this->validate($request->getPayload()->all(), self::RULES);
 
-        return new IndexTeamRequest(
+        return new StoreTeamRequest(
             name: $request->getPayload()->get('name'),
             sportId: $request->getPayload()->get('sport'),
             city: $request->getPayload()->get('city'),

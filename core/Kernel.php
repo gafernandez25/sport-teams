@@ -12,15 +12,26 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Kernel
 {
-    public function handle(Request $request): Response
+    public function handle(Request $request): ?Response
     {
         $router = Router::create();
 
         try {
             $response = $router->routeRequest($request);
 
-            return ($response !== null) ? $response : new JsonResponse();
-        } catch (RouteNotFoundException) {
+            if ($response === null) {
+                return null;
+            }
+
+            if ($response instanceof View) {
+                return new Response(
+                    content: $response->getHtml()
+                );
+            }
+
+            return $response;
+        } catch (RouteNotFoundException $e) {
+            throw $e;
             return new JsonResponse(status: Response::HTTP_NOT_FOUND);
         } catch (MethodNotAllowedException) {
             return new JsonResponse(status: Response::HTTP_METHOD_NOT_ALLOWED);
