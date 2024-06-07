@@ -28,7 +28,7 @@
                             <div class="col-sm-6">
                                 <h3 class="col-12 text-success">Deporte: <b><?= $this->team->sport->name ?></b></h3>
                                 <h4 class="col-12 text-info">Capit&aacute;n:
-                                    <b><?= $this->team->captain->first_name . ' ' . $this->team->captain->last_name ?></b>
+                                    <b><?= $this->team->captain?->first_name . ' ' . $this->team->captain?->last_name ?></b>
                                 </h4>
                                 <h5 class="col-12 text-orange">Ciudad: <b><?= $this->team->city ?></b></h5>
                                 <h6 class="col-12 text-pink">Fecha de fundación: <b>

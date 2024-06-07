@@ -35,7 +35,6 @@
                             <tr>
                                 <th>Nombre</th>
                                 <th>Deporte</th>
-                                <th>Capit&aacute;n</th>
                                 <th>Ciudad</th>
                                 <th>Fecha de fundación</th>
                                 <th></th>
@@ -49,7 +48,6 @@
                                 <tr>
                                     <td><?= $team->name ?></td>
                                     <td><?= $team->sport->name ?></td>
-                                    <td><?= $team->captain?->first_name . ' ' . $team->captain?->last_name ?></td>
                                     <td><?= $team->city ?></td>
                                     <td><?= ($team->foundation_date) ?
                                             \Carbon\Carbon::parse($team->foundation_date)->format('d-m-Y') :
@@ -66,7 +64,6 @@
                             <tr>
                                 <th>Nombre</th>
                                 <th>Deporte</th>
-                                <th>Capit&aacute;n</th>
                                 <th>Ciudad</th>
                                 <th>Fecha de fundación</th>
                                 <th></th>
