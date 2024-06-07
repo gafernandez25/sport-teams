@@ -16,6 +16,10 @@ class Kernel
     {
         $router = Router::create();
 
+        if ($request->getPayload()->has('_method')) {
+            $request->setMethod($request->getPayload()->get('_method'));
+        }
+
         try {
             $response = $router->routeRequest($request);
 

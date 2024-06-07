@@ -47,7 +47,7 @@
                                 ?>
                                 <tr>
                                     <td><?= $team->name ?></td>
-                                    <td><?= $team->sport()->value('name') ?></td>
+                                    <td><?= $team->sport->name ?></td>
                                     <td><?= $team->city ?></td>
                                     <td><?= ($team->foundation_date) ?
                                             \Carbon\Carbon::parse($team->foundation_date)->format('d-m-Y') :
