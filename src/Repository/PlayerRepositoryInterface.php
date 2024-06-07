@@ -15,4 +15,6 @@ interface PlayerRepositoryInterface
      * @return ?Player
      */
     public function getById(int $id): ?Model;
+
+    public function delete(Player $player): bool;
 }

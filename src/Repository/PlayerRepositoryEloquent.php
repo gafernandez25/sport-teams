@@ -18,4 +18,9 @@ class PlayerRepositoryEloquent implements PlayerRepositoryInterface
     {
         return Player::query()->find($id);
     }
+
+    public function delete(Player $player): bool
+    {
+        return $player->delete();
+    }
 }

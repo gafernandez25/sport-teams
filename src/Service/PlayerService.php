@@ -15,6 +15,7 @@ readonly class PlayerService
     public function __construct(
         private PlayerRepositoryInterface $playerRepository,
         private TeamRepositoryInterface $teamRepository,
+        private TeamService $teamService,
     ) {
     }
 
@@ -31,9 +32,7 @@ readonly class PlayerService
         $this->playerRepository->save($player);
 
         if ($request->isCaptain) {
-            $team->captain_id = $player->id;
-
-            $this->teamRepository->save($team);
+            $this->teamService->updateCaptain($team, $player);
         }
     }
 
@@ -51,5 +50,14 @@ readonly class PlayerService
 
             $this->teamRepository->save($player->team);
         }
+    }
+
+    public function deletePlayer(Player $player): bool
+    {
+        if ($player->id == $player->team->captain_id) {
+            $this->teamService->cleanCaptain($player->team);
+        }
+
+        return $this->playerRepository->delete($player);
     }
 }

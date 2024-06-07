@@ -14,7 +14,7 @@ class StorePlayerRequestValidator extends AbstractValidator
     private const RULES = [
         'first_name' => 'required',
         'last_name' => 'required',
-        'number' => 'required|is:numeric',
+        'number' => 'required|is:numeric|max:99',
         'birth_date' => 'date:d-m-Y',
     ];
 

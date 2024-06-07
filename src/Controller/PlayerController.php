@@ -8,6 +8,7 @@ use App\Repository\PlayerRepositoryInterface;
 use App\Repository\TeamRepositoryInterface;
 use App\Service\PlayerService;
 use App\Validator\StorePlayerRequestValidator;
+use Core\Session;
 use Core\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -25,9 +26,16 @@ class PlayerController extends AbstractController
 
     public function create(int $teamId): View
     {
+        $oldInput = (Session::has('oldInput')) ? Session::pull('oldInput') : null;
+        $errorMessages = (Session::has('errorMessages')) ? Session::pull('errorMessages') : null;
+
         $team = $this->teamRepository->getById($teamId);
 
-        return View::make('player/create', ['team' => $team]);
+        return View::make('player/create', [
+            'team' => $team,
+            'errorMessages' => $errorMessages,
+            'oldInput' => $oldInput,
+        ]);
     }
 
     public function store(Request $request, int $teamId): RedirectResponse
@@ -45,9 +53,16 @@ class PlayerController extends AbstractController
 
     public function edit(int $id): View
     {
+        $oldInput = (Session::has('oldInput')) ? Session::pull('oldInput') : null;
+        $errorMessages = (Session::has('errorMessages')) ? Session::pull('errorMessages') : null;
+
         $player = $this->playerRepository->getById($id);
 
-        return View::make('player/edit', ['player' => $player]);
+        return View::make('player/edit', [
+            'player' => $player,
+            'errorMessages' => $errorMessages,
+            'oldInput' => $oldInput,
+        ]);
     }
 
     public function update(Request $request, int $id): RedirectResponse
@@ -63,7 +78,12 @@ class PlayerController extends AbstractController
         );
     }
 
-//    public function delete(int $id): JsonResponse
-//    {
-//    }
+    public function delete(int $id): JsonResponse
+    {
+        $player = $this->playerRepository->getById($id);
+
+        $this->playerService->deletePlayer($player);
+
+        return new JsonResponse();
+    }
 }
