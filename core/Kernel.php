@@ -16,6 +16,10 @@ class Kernel
     {
         $router = Router::create();
 
+        if ($request->getPayload()->get('_method') === 'PUT') {
+            $request->setMethod('PUT');
+        }
+
         try {
             $response = $router->routeRequest($request);
 

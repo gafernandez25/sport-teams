@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $team_id
  * @property int $number
  * @property ?string $birth_date
+ *
+ * @property Team $team
  */
 class Player extends Model
 {

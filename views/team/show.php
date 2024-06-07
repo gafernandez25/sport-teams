@@ -70,7 +70,9 @@
                                             '' ?></td>
                                     <td><?= $player->number ?></td>
                                     <td class="text-right">
-                                        <a href="" title="Editar"><i class="fas fa-pencil-alt text-info"></i> </a>
+                                        <a href="<?= '/player/' . $player->id . '/edit/' ?>"
+                                           title="Editar"><i
+                                                    class="fas fa-pencil-alt text-info"></i> </a>
                                         <a href="" title="Eliminar"><i class="fas fa-trash-alt text-danger"></i> </a>
                                     </td>
                                 </tr>

@@ -10,11 +10,11 @@ use App\Repository\PlayerRepositoryInterface;
 use App\Repository\TeamRepositoryInterface;
 use App\Request\StorePlayerRequest;
 
-class PlayerService
+readonly class PlayerService
 {
     public function __construct(
-        private readonly PlayerRepositoryInterface $playerRepository,
-        private readonly TeamRepositoryInterface $teamRepository,
+        private PlayerRepositoryInterface $playerRepository,
+        private TeamRepositoryInterface $teamRepository,
     ) {
     }
 
@@ -34,6 +34,22 @@ class PlayerService
             $team->captain_id = $player->id;
 
             $this->teamRepository->save($team);
+        }
+    }
+
+    public function updateTeamPlayerFromRequest(StorePlayerRequest $request, Player $player): void
+    {
+        $player->first_name = $request->firstName;
+        $player->last_name = $request->lastName;
+        $player->number = $request->number;
+        $player->birth_date = $request->birthDate;
+
+        $this->playerRepository->save($player);
+
+        if ($request->isCaptain) {
+            $player->team->captain_id = $player->id;
+
+            $this->teamRepository->save($player->team);
         }
     }
 }

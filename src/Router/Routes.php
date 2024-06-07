@@ -25,5 +25,11 @@ class Routes
             $r->get('/create', [PlayerController::class, 'create']);
             $r->post('', [PlayerController::class, 'store']);
         });
+
+        $r->addGroup('/player', function (RouteCollector $r) {
+            $r->post('', [PlayerController::class, 'store']);
+            $r->get('/{id:\d+}/edit', [PlayerController::class, 'edit']);
+            $r->put('/{id:\d+}', [PlayerController::class, 'update']);
+        });
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Repository\PlayerRepositoryInterface;
 use App\Repository\TeamRepositoryInterface;
 use App\Service\PlayerService;
 use App\Validator\StorePlayerRequestValidator;
@@ -18,6 +19,7 @@ class PlayerController extends AbstractController
         private readonly TeamRepositoryInterface $teamRepository,
         private readonly StorePlayerRequestValidator $storePlayerRequestValidator,
         private readonly PlayerService $playerService,
+        private readonly PlayerRepositoryInterface $playerRepository,
     ) {
     }
 
@@ -41,14 +43,26 @@ class PlayerController extends AbstractController
         );
     }
 
-//    public function edit(int $id): View
-//    {
-//    }
-//
-//    public function update(Request $request, int $id): RedirectResponse
-//    {
-//    }
-//
+    public function edit(int $id): View
+    {
+        $player = $this->playerRepository->getById($id);
+
+        return View::make('player/edit', ['player' => $player]);
+    }
+
+    public function update(Request $request, int $id): RedirectResponse
+    {
+        $storePlayerRequest = $this->storePlayerRequestValidator->validateRequest($request);
+
+        $player = $this->playerRepository->getById($id);
+
+        $this->playerService->updateTeamPlayerFromRequest($storePlayerRequest, $player);
+
+        return new RedirectResponse(
+            url: '/team/' . $player->team_id
+        );
+    }
+
 //    public function delete(int $id): JsonResponse
 //    {
 //    }
