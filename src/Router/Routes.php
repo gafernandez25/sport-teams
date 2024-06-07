@@ -11,10 +11,13 @@ class Routes
 {
     public function setRoutes(RouteCollector &$r): void
     {
+        $r->get('', [TeamController::class, 'index']);
+
         $r->addGroup('/team', function (RouteCollector $r) {
             $r->post('', [TeamController::class, 'store']);
             $r->get('', [TeamController::class, 'index']);
-//            $r->get('/{id:\d+}', [TeamController::class, 'show']);
+            $r->get('/create', [TeamController::class, 'create']);
+            $r->get('/{id:\d+}', [TeamController::class, 'show']);
         });
     }
 }

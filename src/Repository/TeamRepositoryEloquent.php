@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Model\Team;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class TeamRepositoryEloquent implements TeamRepositoryInterface
 {
@@ -14,8 +15,13 @@ class TeamRepositoryEloquent implements TeamRepositoryInterface
         return $team->save();
     }
 
-    public function getTeams(): Collection
+    public function getAll(): Collection
     {
         return Team::query()->get();
+    }
+
+    public function getById(int $id): ?Model
+    {
+        return Team::query()->find($id);
     }
 }

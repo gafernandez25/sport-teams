@@ -5,26 +5,32 @@ declare(strict_types=1);
 namespace App\Validator;
 
 use App\Request\StoreTeamRequest;
+use App\Response\ValidationErrorResponse;
+use Core\Session;
 use Symfony\Component\HttpFoundation\Request;
 
 class StoreTeamRequestValidator extends AbstractValidator
 {
     private const RULES = [
         'name' => 'required',
-        'sport' => 'required|is:int',
-        'foundation_date' => 'date',
+        'sport' => 'required|is:numeric',
+        'foundation_date' => 'date:d-m-Y',
     ];
 
     public function validateRequest(Request $request): StoreTeamRequest
     {
-        $this->validate($request->getPayload()->all(), self::RULES);
+        if (!$this->validate($request->getPayload()->all(), self::RULES)) {
+            Session::set('oldInput', $request->getPayload()->all());
+
+            ValidationErrorResponse::redirectBack();
+        }
 
         return new StoreTeamRequest(
             name: $request->getPayload()->get('name'),
-            sportId: $request->getPayload()->get('sport'),
+            sportId: (int)$request->getPayload()->get('sport'),
             city: $request->getPayload()->get('city'),
             foundationDate: $request->getPayload()->has('foundation_date') ?
-                new \DateTimeImmutable($request->getPayload()->get('foundation_date')) :
+                \DateTimeImmutable::createFromFormat('d-m-Y', $request->getPayload()->get('foundation_date')) :
                 null,
         );
     }

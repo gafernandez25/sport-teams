@@ -4,28 +4,35 @@ declare(strict_types=1);
 
 namespace App\Validator;
 
+use Core\Session;
 use MadeSimple\Validator\Validator;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractValidator
 {
+    protected array $errorMessages = [];
+
     public function __construct(private readonly Validator $validator)
     {
     }
 
-    protected function validate(array $params, array $rules): void
+    protected function validate(array $params, array $rules): bool
     {
         $this->validator->validate($params, $rules);
 
         if ($this->validator->hasErrors()) {
-            $response = new JsonResponse(
-                data: $this->validator->getProcessedErrors(),
-                status: Response::HTTP_UNPROCESSABLE_ENTITY
-            );
+            $errorMessages = [];
 
-            $response->send();
-            die;
+            foreach ($this->validator->getProcessedErrors()['errors'] as $error) {
+                foreach ($error as $message) {
+                    $errorMessages[] = $message;
+                }
+            }
+
+            Session::set('errorMessages', $errorMessages);
+
+            return false;
         }
+
+        return true;
     }
 }

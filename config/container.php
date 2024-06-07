@@ -5,5 +5,5 @@
  * https://php-di.org/
  */
 return [
-    'App\Repository\TeamRepositoryInterface' => DI\autowire('App\Repository\TeamRepositoryEloquent'),
+    'App\Repository\*RepositoryInterface' => DI\autowire('App\Repository\*RepositoryEloquent'),
 ];
