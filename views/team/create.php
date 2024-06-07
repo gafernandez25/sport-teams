@@ -77,7 +77,6 @@
                                         <input type="text" class="form-control datetimepicker-input"
                                                name="foundation_date" data-target="#foundation_date"
                                                value="<?= (isset($this->oldInput['foundation_date'])) ? $this->oldInput['foundation_date'] : '' ?>"
-                                               required
                                         />
                                         <div class="input-group-append" data-target="#foundation_date"
                                              data-toggle="datetimepicker">

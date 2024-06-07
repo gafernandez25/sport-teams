@@ -29,7 +29,7 @@ class StoreTeamRequestValidator extends AbstractValidator
             name: $request->getPayload()->get('name'),
             sportId: (int)$request->getPayload()->get('sport'),
             city: $request->getPayload()->get('city'),
-            foundationDate: $request->getPayload()->has('foundation_date') ?
+            foundationDate: !empty($request->getPayload()->get('foundation_date')) ?
                 \DateTimeImmutable::createFromFormat('d-m-Y', $request->getPayload()->get('foundation_date')) :
                 null,
         );

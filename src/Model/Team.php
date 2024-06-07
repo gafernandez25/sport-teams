@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property-read int $id
  * @property string $name
- * @property string $city
+ * @property ?string $city
  * @property int $sport_id
- * @property string $foundation_date
+ * @property ?string $foundation_date
  */
 class Team extends Model
 {

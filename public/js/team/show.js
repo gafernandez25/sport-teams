@@ -1,5 +1,5 @@
 $(function () {
-    $('#teams').DataTable({
+    $('#players').DataTable({
         "paging": true,
         "lengthChange": true,
         "searching": true,
