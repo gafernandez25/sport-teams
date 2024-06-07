@@ -53,7 +53,7 @@ Execute SQL queries inside SQL directory to create database and tables. phpMyAdm
 
 ### Disclaimers:
 
-> As this is a DEMO repository I take the liberty to expose credentials inside some commited files.
+> As this is a DEMO repository I took the liberty to expose credentials inside some commited files.
 
 > Some sensitive values inside .env file, docker compose file, etc. should be store in secrets places ideally outside
 > this environment, e.g. AWS secrets.
