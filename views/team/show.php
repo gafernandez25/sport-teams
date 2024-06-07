@@ -26,20 +26,22 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h3 class="col-12">Deporte: <b><?= $this->team->sport()->value('name') ?></b></h3>
-                                <h4 class="col-12">Capit&aacute;n: <b></b></h4>
-                                <h5 class="col-12">Ciudad: <b><?= $this->team->city ?></b></h5>
-                                <h6 class="col-12">Fecha de fundación: <b>
-                                    <?= ($this->team->foundation_date) ?
-                                        \Carbon\Carbon::parse($this->team->foundation_date)->format(
-                                            'd-m-Y'
-                                        ) :
-                                        '' ?>
+                                <h3 class="col-12 text-success">Deporte: <b><?= $this->team->sport->name ?></b></h3>
+                                <h4 class="col-12 text-info">Capit&aacute;n:
+                                    <b><?= $this->team->captain->first_name . ' ' . $this->team->captain->last_name ?></b>
+                                </h4>
+                                <h5 class="col-12 text-orange">Ciudad: <b><?= $this->team->city ?></b></h5>
+                                <h6 class="col-12 text-pink">Fecha de fundación: <b>
+                                        <?= ($this->team->foundation_date) ?
+                                            \Carbon\Carbon::parse($this->team->foundation_date)->format(
+                                                'd-m-Y'
+                                            ) :
+                                            '' ?>
                                     </b>
                                 </h6>
                             </div>
                             <div class="col-sm-6 text-right">
-                                <a href="/player/create" title="Nuevo jugador">
+                                <a href="<?= '/team/' . $this->team->id . '/player/create' ?>" title="Nuevo jugador">
                                     <i class="fa fa-plus-circle text-gray-dark"></i>
                                 </a>
                             </div>
@@ -56,6 +58,26 @@
                                 <th></th>
                             </tr>
                             </thead>
+                            <tbody>
+                            <?php
+                            /** @var \App\Model\Player $player */
+                            foreach ($this->team->players as $player) {
+                                ?>
+                                <tr>
+                                    <td><?= $player->first_name . ' ' . $player->last_name ?></td>
+                                    <td><?= ($player->birth_date) ?
+                                            \Carbon\Carbon::parse($player->birth_date)->format('d-m-Y') :
+                                            '' ?></td>
+                                    <td><?= $player->number ?></td>
+                                    <td class="text-right">
+                                        <a href="" title="Editar"><i class="fas fa-pencil-alt text-info"></i> </a>
+                                        <a href="" title="Eliminar"><i class="fas fa-trash-alt text-danger"></i> </a>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                            </tbody>
                             <tfoot>
                             <tr>
                                 <th>Nombre</th>
