@@ -28,8 +28,7 @@ docker-compose up -d
 ## Source code
 
 1) Once containers are created enter to php-fpm container as root user. It's recommended to execute every cli commands
-   from
-   inside the container.
+   from inside the container.
 
 ``` sh
 docker exec -ti sport-teams-php-fpm bash
@@ -49,13 +48,14 @@ cp .env.example .env
 
 ## Database
 
-Execute SQL queries inside SQL directory to create database and tables
+Execute SQL queries inside SQL directory to create database and tables. phpMyAdmin is available in port 8001.
+> http://localhost:8001
 
 ### Disclaimers:
 
 > As this is a DEMO repository I take the liberty to expose credentials inside some commited files.
 
-> Some sensitive values inside .env file, docker compose file, etc. should be store in secrets places ideally outside 
+> Some sensitive values inside .env file, docker compose file, etc. should be store in secrets places ideally outside
 > this environment, e.g. AWS secrets.
 
 Everything set up, enjoy it!! :smiley:
